@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1006383180286",
+    "project_id": "helpme-419c7",
+    "storage_bucket": "helpme-419c7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1006383180286:android:7e43603952fb5e5fd5f8af",
+        "android_client_info": {
+          "package_name": "com.ibcorp.helpmeapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1006383180286-ik4hh24bl2m17rc6ubab46cu08fe3a1q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6cjL7y2xKjD5-mC2VbwFpB7iyDbAob5o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1006383180286-ik4hh24bl2m17rc6ubab46cu08fe3a1q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
