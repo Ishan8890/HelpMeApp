@@ -51,6 +51,7 @@ class CustomToast {
         //Fragments Tags
         const val Login_Fragment = "Login_Fragment"
         const val SignUp_Fragment = "SignUp_Fragment"
+        const val Home_Fragment = "Home_Fragment"
         const val ForgotPassword_Fragment = "ForgotPassword_Fragment"
          fun snackbar(str:String,mview:View){
             val snackBar = Snackbar.make(

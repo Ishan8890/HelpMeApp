@@ -34,6 +34,8 @@ class WelcomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        print()
+
         // Checking for first time launch - before calling setContentView()
         prefManager = PrefManager(this)
         if (!prefManager!!.isFirstTimeLaunch) {
@@ -93,6 +95,10 @@ class WelcomeActivity : AppCompatActivity() {
                 launchHomeScreen()
             }
         }
+    }
+
+    fun print(){
+        
     }
 
     private fun addBottomDots(currentPage: Int) {

@@ -1,6 +1,7 @@
 package com.ibcorp.helpmeapp.ui
 
 import android.content.Intent
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.animation.Animation
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.facebook.*
 import com.facebook.login.LoginBehavior
@@ -17,13 +19,8 @@ import com.google.android.gms.ads.AdView
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.ibcorp.helpmeapp.DashboardMainActivity
-import com.ibcorp.helpmeapp.Fragments.Login_Fragment
 import com.ibcorp.helpmeapp.Model.CustomToast
 import com.ibcorp.helpmeapp.PrefManager
 import com.ibcorp.helpmeapp.R
@@ -54,13 +51,14 @@ class MainActivity : AppCompatActivity() {
 //        checkAppStatus()
         // If savedinstnacestate is null then replace login fragment
         binding.admin.setOnClickListener {
-            binding.btnParent.visibility = View.GONE
-            if (savedInstanceState == null) {
-                mfragmentManager?.beginTransaction()?.replace(
-                    R.id.frameContainer, Login_Fragment(),
-                    CustomToast.Login_Fragment
-                )?.commit()
-            }
+            startActivity(Intent(this, LoginActivity::class.java))
+//            binding.btnParent.visibility = View.GONE
+//            if (savedInstanceState == null) {
+//                mfragmentManager?.beginTransaction()?.replace(
+//                    R.id.frameContainer, Login_Fragment(),
+//                    CustomToast.Login_Fragment
+//                )?.commit()
+//            }
         }
     }
 
@@ -98,7 +96,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun googleSignin(){
-        var mAuth = FirebaseAuth.getInstance();
+//        var mAuth = FirebaseAuth.getInstance();
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
@@ -108,6 +106,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun signIn(googleSignInClient: GoogleSignInClient) {
+        binding.llProgressBar.visibility =  View.VISIBLE
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
@@ -128,6 +127,7 @@ class MainActivity : AppCompatActivity() {
                         val intent = Intent(this@MainActivity, DashboardMainActivity::class.java)
                         intent.putExtra("data", getData(first_name,last_name,email,image_url,id))
                         startActivity(intent)
+                        finish()
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
@@ -167,6 +167,8 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this, DashboardMainActivity::class.java)
                 intent.putExtra("data", getData(account.displayName!!,"",account.email!!,account.photoUrl.toString(),account.id!!))
                 startActivity(intent)
+                binding.llProgressBar.visibility =  View.GONE
+                finish()
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e)
@@ -195,27 +197,10 @@ class MainActivity : AppCompatActivity() {
             }
     }*/
 
-    // Replace Login Fragment with animation
-     fun replaceLoginFragment() {
-        mfragmentManager?.beginTransaction()
-            ?.setCustomAnimations(R.anim.left_enter, R.anim.right_out)
-            ?.replace(
-                R.id.frameContainer, Login_Fragment(),
-                CustomToast.Login_Fragment
-            )?.commit()
+    override fun onBackPressed() {
+        finish()
     }
-    override
-    fun onBackPressed() {
-        super.onBackPressed()
-        // Find the tag of signup and forgot password fragment
-//        val SignUp_Fragment: Fragment = mfragmentManager?.findFragmentByTag(Utils.SignUp_Fragment)!!
-//        val ForgotPassword_Fragment: Fragment = mfragmentManager?.findFragmentByTag(Utils.ForgotPassword_Fragment)!!
-//
-//        // Check if both are null or not
-//        // If both are not null then replace login fragment else do backpressed
-//        // task
-//        if (SignUp_Fragment != null) replaceLoginFragment() else if (ForgotPassword_Fragment != null) replaceLoginFragment() else super.onBackPressed()
-    }
+
 
     companion object {
         private var mfragmentManager: FragmentManager? = null

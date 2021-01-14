@@ -5,8 +5,13 @@
     android:layout_height="fill_parent"
     android:fillViewport="true"
     android:gravity="center"
-    android:background="@color/background_color"
+    android:background="@color/cardview_shadow_start_color"
     android:orientation="vertical">
+
+    <include
+        android:id="@+id/llProgressBar"
+        android:visibility="gone"
+        layout="@layout/common_progressbar" />
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -30,11 +35,6 @@
             android:layout_below="@+id/close_activity" />
     </RelativeLayout>
 
-
-<FrameLayout
-    android:id="@+id/frameContainer"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
 
     <LinearLayout
         android:id="@+id/btnParent"
@@ -76,6 +76,5 @@
 
 
     </LinearLayout>
-</FrameLayout>
 </LinearLayout>
 </layout>

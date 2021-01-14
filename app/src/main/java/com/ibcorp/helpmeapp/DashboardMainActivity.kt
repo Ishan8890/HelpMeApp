@@ -91,6 +91,7 @@ class DashboardMainActivity : AppCompatActivity() {
             prefManager!!.clearData()
             prefManager!!.isFirstTimeLaunch = isLaunched
             startActivity(Intent(this,MainActivity::class.java))
+            finish()
             true
         }
     }

@@ -54,9 +54,9 @@ class ForgotPassword_Fragment : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.backToLoginBtn ->
-                // Replace Login Fragment on Back Presses
-                MainActivity()?.replaceLoginFragment()
+//            R.id.backToLoginBtn ->
+//                // Replace Login Fragment on Back Presses
+//                MainActivity()?.replaceLoginFragment()
             R.id.forgot_button ->
                 // Call Submit button task
                 submitButtonTask()

@@ -58,7 +58,7 @@ class CommonReadAdapter(val userList: List<User>,val context: Context) : Recycle
         fun pdfReader(url:String,context: Context,view: View){
 //            var pdfUrl = "https://firebasestorage.googleapis.com/v0/b/helpme-419c7.appspot.com/o/Ishan_Android_CV.pdf?alt=media&token=585656ea-0bf9-49fb-9512-bf74203e0045"
 //            var pdfUrl = "https://firebasestorage.googleapis.com/v0/b/helpme-419c7.appspot.com/o/question.docx?alt=media&token=a8f8536e-cfac-4e35-852d-0f77ae05a738"
-            var pdfUrl = "https://firebasestorage.googleapis.com/v0/b/helpme-419c7.appspot.com/o/HelpMeApp_Doc.pdf?alt=media&token=7d31880c-3a3e-4354-805c-6ebc3e836865"
+//            var pdfUrl = "https://firebasestorage.googleapis.com/v0/b/helpme-419c7.appspot.com/o/HelpMeApp_Doc.pdf?alt=media&token=7d31880c-3a3e-4354-805c-6ebc3e836865"
             val intent = Intent(Intent.ACTION_VIEW)
             intent.setDataAndType(Uri.parse(url), "application/pdf")
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)

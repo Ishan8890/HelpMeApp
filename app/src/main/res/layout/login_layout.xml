@@ -1,7 +1,9 @@
+<layout>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
+    android:background="@color/com_facebook_blue"
     android:padding="20dp">
 
 
@@ -20,8 +22,7 @@
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
             ads:adSize="BANNER"
-            android:visibility="gone"
-            ads:adUnitId="@string/banner_ad_unit_id_login">
+            ads:adUnitId="ca-app-pub-2205239074559548/9195262344">
         </com.google.android.gms.ads.AdView>
 
         <TextView
@@ -101,7 +102,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/loginBtn"
+            android:id="@+id/btn_login"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
@@ -146,3 +147,4 @@
     </LinearLayout>
 
 </RelativeLayout>
+</layout>

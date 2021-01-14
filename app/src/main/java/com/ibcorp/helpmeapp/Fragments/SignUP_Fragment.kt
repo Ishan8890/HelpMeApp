@@ -68,9 +68,9 @@ class SignUp_Fragment : Fragment(), View.OnClickListener {
             R.id.signUpBtn ->
                 // Call checkValidation method
                 checkValidation()
-            R.id.already_user ->
+//            R.id.already_user ->
                 // Replace login fragment
-                MainActivity().replaceLoginFragment()
+//                MainActivity().replaceLoginFragment()
         }
     }
 
