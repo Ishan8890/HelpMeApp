@@ -1,4 +1,4 @@
-package com.ibcorp.helpmeapp.Model
+package com.ibcorp.helpmeapp.model
 
 data class CommonModel(
     val topic: String,

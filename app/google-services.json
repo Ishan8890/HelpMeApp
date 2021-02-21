@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "1006383180286",
+    "firebase_url": "https://helpme-419c7-default-rtdb.firebaseio.com",
     "project_id": "helpme-419c7",
     "storage_bucket": "helpme-419c7.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "1006383180286-dcohvdm9ijt8l3djr8voqqg07la01kd2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ibcorp.helpmeapp",
+            "certificate_hash": "54779d660044d7c64ad35a1799409c06396a872b"
+          }
+        },
         {
           "client_id": "1006383180286-ik4hh24bl2m17rc6ubab46cu08fe3a1q.apps.googleusercontent.com",
           "client_type": 3

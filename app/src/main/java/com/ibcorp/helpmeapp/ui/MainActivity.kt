@@ -1,27 +1,27 @@
 package com.ibcorp.helpmeapp.ui
 
+import android.annotation.SuppressLint
+import android.app.ActivityManager
+import android.content.Context
 import android.content.Intent
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.animation.Animation
-import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.facebook.*
 import com.facebook.login.LoginBehavior
 import com.facebook.login.LoginResult
-import com.facebook.login.widget.LoginButton
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.ibcorp.helpmeapp.DashboardMainActivity
-import com.ibcorp.helpmeapp.Model.CustomToast
+import com.ibcorp.helpmeapp.model.Utils
 import com.ibcorp.helpmeapp.PrefManager
 import com.ibcorp.helpmeapp.R
 import com.ibcorp.helpmeapp.databinding.ActivityMainBinding
@@ -44,13 +44,24 @@ class MainActivity : AppCompatActivity() {
     override
     fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+//        Intent(this, HelloService::class.java).also { intent ->
+//
+//            if (!isMyServiceRunning(HelloService::class.java)) {
+//                startService(intent);
+//            }
+////            startService(intent)
+//        }
+
+
         init()
 
         mfragmentManager = supportFragmentManager
 //        checkAppStatus()
         // If savedinstnacestate is null then replace login fragment
         binding.admin.setOnClickListener {
+            Utils.captureFirebaseEvents("Admin","Admin","Admin",this)
             startActivity(Intent(this, LoginActivity::class.java))
 //            binding.btnParent.visibility = View.GONE
 //            if (savedInstanceState == null) {
@@ -63,36 +74,74 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    override fun onPause() {
+        super.onPause()
+    }
+
+    private fun isMyServiceRunning(serviceClass: Class<*>): Boolean {
+        val manager: ActivityManager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        for (service in manager.getRunningServices(Int.MAX_VALUE)) {
+            if (serviceClass.name == service.service.getClassName()) {
+                Log.i("Service status", "Running")
+                return true
+            }
+        }
+        Log.i("Service status", "Not running")
+        return false
+    }
+
+
+
     fun init(){
         prefManager = PrefManager(this)
         callbackManager = CallbackManager.Factory.create()
-        binding.loginButton.setReadPermissions(Arrays.asList("email", "public_profile"))
+        binding.loginButton.setReadPermissions(Arrays.asList("email", "public_profile","user_friends"))
         binding.loginButton.setLoginBehavior(LoginBehavior.NATIVE_WITH_FALLBACK);
-        binding.loginButton.registerCallback(callbackManager, object : FacebookCallback<LoginResult?> {
-            override
-            fun onSuccess(loginResult: LoginResult?) {
-                // App code
-                val loggedIn = AccessToken.getCurrentAccessToken() == null
-                Log.d("API123", "$loggedIn ??")
-                getUserProfile(AccessToken.getCurrentAccessToken())
-            }
+        binding.loginButton.registerCallback(
+            callbackManager,
+            object : FacebookCallback<LoginResult?> {
+                override
+                fun onSuccess(loginResult: LoginResult?) {
+                    // App code
+                    val loggedIn = AccessToken.getCurrentAccessToken() == null
+                    Log.d("API123", "$loggedIn ??")
+                    getUserProfile(AccessToken.getCurrentAccessToken())
+                }
 
-            override
-            fun onCancel() {
-                Log.d("API123", "")
-            }
+                override
+                fun onCancel() {
+                    Log.d("API123", "")
+                }
 
-            override
-            fun onError(exception: FacebookException?) {
-                // App code
-                Log.d("API123", "" + exception)
-            }
-        })
+                override
+                fun onError(exception: FacebookException?) {
+                    // App code
+                    Log.d("API123", "" + exception)
+                }
+            })
 
         binding.signInButton.setOnClickListener(){
             googleSignin()
         }
+        getToken()
+    }
 
+    @SuppressLint("StringFormatInvalid")
+    fun getToken(){
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+            prefManager!!.firebaseToken = token
+            // Log and toast
+            val msg = getString(R.string.msg_token_fmt, token)
+            Log.d(TAG, msg)
+//            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+        })
     }
 
     private fun googleSignin(){
@@ -123,9 +172,12 @@ class MainActivity : AppCompatActivity() {
                         val email: String = `object`.getString("email")
                         val id: String = `object`.getString("id")
                         val image_url = "https://graph.facebook.com/$id/picture?type=normal"
-
+                        Utils.captureFirebaseEvents(first_name+""+last_name,"Facebook","Login",applicationContext)
                         val intent = Intent(this@MainActivity, DashboardMainActivity::class.java)
-                        intent.putExtra("data", getData(first_name,last_name,email,image_url,id))
+                        intent.putExtra(
+                            "data",
+                            getData(first_name, last_name, email, image_url, id,true)
+                        )
                         startActivity(intent)
                         finish()
                     } catch (e: JSONException) {
@@ -139,7 +191,13 @@ class MainActivity : AppCompatActivity() {
         request.executeAsync()
     }
 
-    private fun getData(first_name:String,last_name:String,email:String,image_url:String,id:String):Bundle{
+    private fun getData(
+        first_name: String,
+        last_name: String,
+        email: String,
+        image_url: String,
+        id: String,isFacebook:Boolean
+    ):Bundle{
 
         var bundle = Bundle()
         bundle.putString("first_name", first_name)
@@ -151,6 +209,11 @@ class MainActivity : AppCompatActivity() {
         prefManager!!.emailId = email
         prefManager!!.imageUrl = image_url
         prefManager!!.userName = first_name + " " +last_name
+        if(isFacebook){
+            prefManager!!.loginChannel = "Facebook"
+        }else{
+            prefManager!!.loginChannel = "Google"
+        }
 
         return bundle
     }
@@ -163,9 +226,19 @@ class MainActivity : AppCompatActivity() {
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 val account = task.getResult(ApiException::class.java)!!
+                var userName = account.displayName
                 Log.d(TAG, "firebaseAuthWithGoogle:" + account.id)
                 val intent = Intent(this, DashboardMainActivity::class.java)
-                intent.putExtra("data", getData(account.displayName!!,"",account.email!!,account.photoUrl.toString(),account.id!!))
+                intent.putExtra(
+                    "data", getData(
+                        account.displayName!!,
+                        "",
+                        account.email!!,
+                        account.photoUrl.toString(),
+                        account.id!!,false
+                    )
+                )
+                Utils.captureFirebaseEvents(userName!!,"Google","Login",this)
                 startActivity(intent)
                 binding.llProgressBar.visibility =  View.GONE
                 finish()
@@ -199,6 +272,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         finish()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 
 

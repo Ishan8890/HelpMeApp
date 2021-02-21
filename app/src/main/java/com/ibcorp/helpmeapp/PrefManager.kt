@@ -12,7 +12,7 @@ class PrefManager(var _context: Context) {
     // shared pref mode
     var PRIVATE_MODE = 0
     var isFirstTimeLaunch: Boolean
-        get() = pref.getBoolean(IS_FIRST_TIME_LAUNCH, true)
+        get() = pref.getBoolean(IS_FIRST_TIME_LAUNCH, false)
         set(isFirstTime) {
             editor.putBoolean(IS_FIRST_TIME_LAUNCH, isFirstTime)
             editor.commit()
@@ -31,6 +31,20 @@ class PrefManager(var _context: Context) {
         editor.putString(USER_NAME, userName)
         editor.commit()
     }
+
+    var loginChannel:String
+        get() = pref.getString(LOGIN_CHANNEL,"").toString()
+        set(loginChannel) {
+            editor.putString(LOGIN_CHANNEL, loginChannel)
+            editor.commit()
+        }
+
+    var firebaseToken:String
+        get() = pref.getString(FIREBASE_TOKEN,"").toString()
+        set(firebaseToken) {
+            editor.putString(FIREBASE_TOKEN, firebaseToken)
+            editor.commit()
+        }
 
     var emailId:String
     get() = pref.getString(USER_EMAIL_ID,"").toString()
@@ -57,8 +71,10 @@ class PrefManager(var _context: Context) {
         private const val IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch"
         private const val LOGIN_ID = "loginId"
         private const val USER_NAME = "user_name"
+        private const val LOGIN_CHANNEL = "login_channel"
         private const val USER_EMAIL_ID = "email_id"
         private const val USER_IMAGE_URL = "image_url"
+        private const val FIREBASE_TOKEN = "token"
     }
 
     init {

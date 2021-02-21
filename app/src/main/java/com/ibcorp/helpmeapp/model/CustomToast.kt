@@ -1,4 +1,4 @@
-package com.ibcorp.helpmeapp.Model
+package com.ibcorp.helpmeapp.model
 
 import android.content.Context
 import android.graphics.Color

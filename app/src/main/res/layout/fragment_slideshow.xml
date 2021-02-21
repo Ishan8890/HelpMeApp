@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="5dp">
@@ -17,6 +16,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_margin="5dp"
+            android:textColor="@color/textColor"
             android:hint="Receiver's Email Address!"
             android:inputType="textEmailAddress"
             android:visibility="gone"
@@ -28,6 +28,7 @@
             android:layout_below="@id/et_to"
             android:layout_margin="5dp"
             android:hint="Topic"
+            android:textColor="@color/textColor"
             android:singleLine="true" />
         <EditText
             android:id="@+id/et_message"
@@ -36,6 +37,7 @@
             android:layout_below="@id/et_subject"
             android:layout_margin="5dp"
             android:gravity="top|left"
+            android:textColor="@color/textColor"
             android:hint="Type your query..."
             android:inputType="textMultiLine" />
         <Button
@@ -44,6 +46,7 @@
             android:layout_height="50dp"
             android:layout_below="@id/et_message"
             android:layout_margin="5dp"
+            android:textColor="@color/textColor"
             android:text="Send" />
         <Button
             android:id="@+id/bt_attachment"
@@ -52,7 +55,16 @@
             android:text="attachment"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:textColor="@color/textColor"
             android:layout_alignParentEnd="true" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar_dialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="150dp"
+            android:gravity="center"
+            android:visibility="gone"/>
     </RelativeLayout>
 </ScrollView>
 </layout>

@@ -1,14 +1,7 @@
 package com.ibcorp.helpmeapp.ui.gallery
 
-import Model
-import User
-import android.content.ActivityNotFoundException
-import android.content.Intent
-import android.net.Uri
-import android.opengl.Visibility
+import com.ibcorp.helpmeapp.model.source.User
 import android.os.Bundle
-import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,19 +10,19 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
 import com.ibcorp.helpmeapp.Adapters.CommonReadAdapter
-import com.ibcorp.helpmeapp.Model.CustomToast
+import com.ibcorp.helpmeapp.model.CustomToast
+import com.ibcorp.helpmeapp.model.Utils
 import com.ibcorp.helpmeapp.R
 import com.ibcorp.helpmeapp.databinding.FragmentGalleryBinding
 
 
-class GalleryFragment : Fragment() {
+class DomainFragment : Fragment() {
 
-    private lateinit var galleryViewModel: GalleryViewModel
+    private lateinit var galleryViewModel: DomainViewModel
     var TAG:String?=null
     lateinit var db:FirebaseFirestore
     lateinit var binding:FragmentGalleryBinding
@@ -40,7 +33,7 @@ class GalleryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        galleryViewModel = ViewModelProvider(this).get(GalleryViewModel::class.java)
+        galleryViewModel = ViewModelProvider(this).get(DomainViewModel::class.java)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_gallery, container, false)
         val view: View = binding.getRoot()
 
@@ -95,7 +88,8 @@ class GalleryFragment : Fragment() {
                 if(!userList.isNullOrEmpty()){
                     binding.progressBar.visibility = View.GONE
                     binding.recyclerView.visibility = View.VISIBLE
-                    val adapter = CommonReadAdapter(userList, requireContext())
+                    Utils.captureUserLectureEvents("Lectures",userList.size.toString(),domainType,requireContext())
+                    val adapter = CommonReadAdapter(userList, requireContext(),false,requireActivity())
                     binding.recyclerView.adapter = adapter
                 }else{
                     Toast.makeText(
@@ -119,7 +113,7 @@ class GalleryFragment : Fragment() {
                         ).show()
                         Log.e(TAG, userInfo.toString())
                         var userList = (userInfo as Model).users
-//                        var userData = (User)userInfo.users
+//                        var userData = (com.ibcorp.helpmeapp.Model.source.User)userInfo.users
 //                        initListView()
                         binding.progressBar.visibility = View.GONE
                         binding.recyclerView.visibility = View.VISIBLE

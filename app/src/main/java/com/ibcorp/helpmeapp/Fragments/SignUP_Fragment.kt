@@ -9,9 +9,8 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
-import com.ibcorp.helpmeapp.Model.CustomToast
+import com.ibcorp.helpmeapp.model.CustomToast
 import com.ibcorp.helpmeapp.R
-import com.ibcorp.helpmeapp.ui.MainActivity
 import java.util.regex.Pattern
 
 

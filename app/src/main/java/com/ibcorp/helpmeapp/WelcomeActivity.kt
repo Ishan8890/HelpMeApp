@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.PagerAdapter
@@ -28,78 +29,78 @@ class WelcomeActivity : AppCompatActivity() {
     private var layouts: IntArray?=null
     private var btnSkip: Button? = null
     private var btnNext: Button? = null
+    private var loader: ProgressBar? = null
     private var prefManager: PrefManager? = null
     var timer: Timer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
-
-        print()
 
         // Checking for first time launch - before calling setContentView()
         prefManager = PrefManager(this)
-        if (!prefManager!!.isFirstTimeLaunch) {
+        if (prefManager!!.isFirstTimeLaunch) {
             launchHomeScreen()
             finish()
-        }
+        }else{
+            // Making notification bar transparent
+            if (Build.VERSION.SDK_INT >= 21) {
+                window.decorView.systemUiVisibility =
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            }
+            setContentView(R.layout.activity_welcome)
+            viewPager = findViewById<View>(R.id.view_pager) as ViewPager
+            dotsLayout = findViewById<View>(R.id.layoutDots) as LinearLayout
+            btnSkip = findViewById<View>(R.id.btn_skip) as Button
+            btnNext = findViewById<View>(R.id.btn_next) as Button
+            loader = findViewById<View>(R.id.initialLoader) as ProgressBar
 
-        // Making notification bar transparent
-        if (Build.VERSION.SDK_INT >= 21) {
-            window.decorView.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        }
-        setContentView(R.layout.activity_welcome)
-        viewPager = findViewById<View>(R.id.view_pager) as ViewPager
-        dotsLayout = findViewById<View>(R.id.layoutDots) as LinearLayout
-        btnSkip = findViewById<View>(R.id.btn_skip) as Button
-        btnNext = findViewById<View>(R.id.btn_next) as Button
 
+            // layouts of all welcome sliders
+            // add few more layouts if you want
+            layouts = intArrayOf(
+                R.layout.welcome_slide1,
+                R.layout.welcome_slide2,
+                R.layout.welcome_slide3,
+                R.layout.welcome_slide4
+            )
 
-        // layouts of all welcome sliders
-        // add few more layouts if you want
-        layouts = intArrayOf(
-            R.layout.welcome_slide1,
-            R.layout.welcome_slide2,
-            R.layout.welcome_slide3,
-            R.layout.welcome_slide4
-        )
+            // adding bottom dots
+            addBottomDots(0)
 
-        // adding bottom dots
-        addBottomDots(0)
+            // making notification bar transparent
+            changeStatusBarColor()
+            myViewPagerAdapter = MyViewPagerAdapter()
+            viewPager!!.adapter = myViewPagerAdapter
 
-        // making notification bar transparent
-        changeStatusBarColor()
-        myViewPagerAdapter = MyViewPagerAdapter()
-        viewPager!!.adapter = myViewPagerAdapter
-
-        val timerTask: TimerTask = object : TimerTask() {
-            override fun run() {
-                viewPager!!.post {
-                    viewPager!!.currentItem = (viewPager!!.currentItem + 1) % layouts!!.size
+            val timerTask: TimerTask = object : TimerTask() {
+                override fun run() {
+                    viewPager!!.post {
+                        viewPager!!.currentItem = (viewPager!!.currentItem + 1) % layouts!!.size
+                    }
                 }
             }
-        }
-        timer = Timer()
-        timer!!.schedule(timerTask, 4000, 4000)
+            timer = Timer()
+            timer!!.schedule(timerTask, 4000, 4000)
 
-        viewPager!!.addOnPageChangeListener(viewPagerPageChangeListener)
-        btnSkip!!.setOnClickListener { launchHomeScreen() }
-        btnNext!!.setOnClickListener {
-            // checking for last page
-            // if last page home screen will be launched
-            val current = getItem(+1)
-            if (current < layouts!!.size) {
-                // move to next screen
-                viewPager!!.currentItem = current
-            } else {
-                launchHomeScreen()
+            viewPager!!.addOnPageChangeListener(viewPagerPageChangeListener)
+            btnSkip!!.setOnClickListener { launchHomeScreen() }
+            btnNext!!.setOnClickListener {
+                // checking for last page
+                // if last page home screen will be launched
+                val current = getItem(+1)
+                if (current < layouts!!.size) {
+                    // move to next screen
+                    viewPager!!.currentItem = current
+                } else {
+                    launchHomeScreen()
+                }
             }
+
         }
+
     }
 
-    fun print(){
-        
-    }
 
     private fun addBottomDots(currentPage: Int) {
         dots = arrayOfNulls(layouts!!.size)
@@ -121,7 +122,7 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
     private fun launchHomeScreen() {
-        prefManager!!.isFirstTimeLaunch = false
+        prefManager!!.isFirstTimeLaunch = true
         if(prefManager!!.token!=null && !prefManager!!.token.isNullOrBlank()){
             startActivity(Intent(this@WelcomeActivity, DashboardMainActivity::class.java))
         }else{

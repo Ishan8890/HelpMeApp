@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.InboxFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textStyle="bold"
+        android:paddingTop="15dp"
+        android:paddingLeft="15dp"
+        android:textSize="18sp"
+        android:textColor="@color/textColor"
+        android:text="@string/hello_blank_fragment" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_inbox"
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:paddingLeft="20dp"
+        android:layout_marginRight="15dp"
+        android:layout_height="match_parent" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar_dialog_inbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:gravity="center"
+        android:visibility="gone"/>
+
+</FrameLayout>
+</layout>

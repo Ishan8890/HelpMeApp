@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.gallery.GalleryFragment">
+    tools:context=".ui.gallery.DomainFragment">
 
 
 <LinearLayout
@@ -21,7 +21,7 @@
         android:gravity="center"
         android:paddingTop="20dp"
         android:textSize="18sp"
-        android:textColor="@color/black"
+        android:textColor="@color/textColor"
         android:textStyle="bold"
         android:text="Domain Type "/>
     <Spinner
@@ -32,6 +32,7 @@
         android:layout_marginRight="10dp"
         android:layout_gravity="center"
         android:layout_weight="0.5"
+        android:textColor="@color/textColor"
         android:layout_height="80dp"/>
 </LinearLayout>
 
@@ -40,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:textColor="@color/black"
+        android:textColor="@color/textColor"
         android:textStyle="bold"
         android:layout_marginTop="100dp"
         android:layout_gravity="center"

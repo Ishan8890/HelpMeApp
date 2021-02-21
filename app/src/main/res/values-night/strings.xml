@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="msg_token_fmt">Firebase Token</string>
+    <string name="document_upload">Document Upload</string>
+    <string name="queries">Queries</string>
+    <string name="provide_your_feedback_to_improve_us">Provide your feedback to improve us</string>
+</resources>

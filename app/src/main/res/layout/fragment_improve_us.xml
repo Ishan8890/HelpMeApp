@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="15dp"
+        tools:context=".Fragments.ImproveUsFragment">
+
+        <TextView
+            android:id="@+id/et_subject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:hint="@string/provide_your_feedback_to_improve_us"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:gravity="center"
+            android:textColor="#000000"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
+
+        <RatingBar
+            android:id="@+id/rateus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:stepSize="0.5"
+            android:layout_gravity="center"
+            android:theme="@style/Widget.AppCompat.RatingBar"
+            android:numStars="5" />
+
+        <EditText
+            android:id="@+id/et_query"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_margin="5dp"
+            android:hint="Type your query..."
+            android:inputType="textMultiLine"
+            android:textColor="@color/textColor" />
+
+        <Button
+            android:id="@+id/bt_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_message"
+            android:layout_margin="5dp"
+            android:text="@string/submit"
+            android:textColor="@color/white" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar_dialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="150dp"
+            android:gravity="center"
+            android:visibility="gone" />
+
+
+    </LinearLayout>
+</layout>

@@ -13,13 +13,31 @@
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.ibcorp.helpmeapp.ui.gallery.GalleryFragment"
+        android:name="com.ibcorp.helpmeapp.ui.gallery.DomainFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
         android:id="@+id/nav_tuition"
-        android:name="com.ibcorp.helpmeapp.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
+        android:name="com.ibcorp.helpmeapp.ui.slideshow.TutionFragment"
+        android:label="@string/menu_tuition"
         tools:layout="@layout/fragment_slideshow" />
+
+    <fragment
+        android:id="@+id/nav_inbox"
+        android:name="com.ibcorp.helpmeapp.Fragments.InboxFragment"
+        android:label="@string/menu_slideshow"
+        tools:layout="@layout/fragment_inbox" />
+
+    <fragment
+        android:id="@+id/nav_improve"
+        android:name="com.ibcorp.helpmeapp.Fragments.ImproveUsFragment"
+        android:label="@string/menu_improve"
+        tools:layout="@layout/fragment_improve_us" />
+
+    <fragment
+        android:id="@+id/nav_news"
+        android:name="com.ibcorp.helpmeapp.Fragments.NewsFragment"
+        android:label="@string/menu_news"
+        tools:layout="@layout/fragment_news" />
 </navigation>

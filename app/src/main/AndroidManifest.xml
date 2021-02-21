@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
         android:name=".App"
@@ -18,8 +19,11 @@
         <activity android:name=".FragmentReplacementActivity"/>
         <activity android:name=".ui.MainActivity" />
         <activity android:name=".ui.LoginActivity" />
-        <activity android:name=".ui.home.AdminActivity" />
-        <activity android:name=".WelcomeActivity">
+        <activity android:name=".ui.home.AdminActivity"
+            android:theme="@style/Theme.HelpMeApp.NoActionBar"/>
+        <activity android:name=".DetailActivity"/>
+        <activity android:name=".WelcomeActivity"
+            android:theme="@style/AppTheme.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -55,6 +59,17 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+
+        <service android:name=".HelloService"
+            android:enabled="true"/>
+        <!--<receiver
+            android:name=".RestartService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="RestartService" />
+            </intent-filter>
+        </receiver>-->
     </application>
 
 </manifest>

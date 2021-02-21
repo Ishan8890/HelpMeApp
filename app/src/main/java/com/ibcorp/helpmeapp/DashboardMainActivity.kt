@@ -18,8 +18,12 @@ import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import com.ibcorp.helpmeapp.model.UserDetail
+import com.ibcorp.helpmeapp.model.Utils
 import com.ibcorp.helpmeapp.databinding.ActivityDashboardMainBinding
 import com.ibcorp.helpmeapp.databinding.NavHeaderMainBinding
 import com.ibcorp.helpmeapp.ui.MainActivity
@@ -32,6 +36,11 @@ class DashboardMainActivity : AppCompatActivity() {
     private var prefManager: PrefManager? = null
     private lateinit var headerBinding:NavHeaderMainBinding
     private lateinit var mGoogleSignInClient:GoogleSignInClient
+    private lateinit var username:String
+    private lateinit var emaidId:String
+    private lateinit var imageUrl:String
+    private lateinit var database: DatabaseReference
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,30 +51,35 @@ class DashboardMainActivity : AppCompatActivity() {
         val bundle = intent.getBundleExtra("data")
         var headerView = binding.navView.getHeaderView(0)
         headerBinding = NavHeaderMainBinding.bind(headerView)
+        database = Firebase.database.reference
         if(bundle!=null){
             var first_name = bundle!!.getString("first_name")
             var last_name = bundle!!.getString("last_name")
-            var email = bundle!!.getString("email")
-            var id = bundle!!.getString("id")
-            var image_url = bundle!!.getString("image_url")
-            if((!first_name.isNullOrBlank()||!last_name.isNullOrBlank())&&!email.isNullOrBlank()&&!image_url.isNullOrBlank()){
-                headerBinding.userName.text = first_name + " " +last_name
-                headerBinding.userEmailId.text = email
-                Glide.with(this).load(image_url).into(headerBinding.imageView);
-            }
-        }else{
-            var username = prefManager!!.userName
-            var email =  prefManager!!.emailId
-            var imageurl = prefManager!!.imageUrl
-            if((!username.isNullOrBlank())&&!email.isNullOrBlank()&&!imageurl.isNullOrBlank()){
+            username = first_name + " " +last_name
+            emaidId = bundle!!.getString("email").toString()
+            imageUrl = bundle!!.getString("image_url").toString()
+            if((!first_name.isNullOrBlank()||!last_name.isNullOrBlank())&&!emaidId.isNullOrBlank()&&!imageUrl.isNullOrBlank()){
                 headerBinding.userName.text = username
-                headerBinding.userEmailId.text = email
-                Glide.with(this).load(imageurl).into(headerBinding.imageView);
+                headerBinding.userEmailId.text = emaidId
+                Glide.with(this).load(imageUrl).into(headerBinding.imageView);
+            }
+            var userDetail =  UserDetail()
+            userDetail.username = username
+            userDetail.email = emaidId
+            userDetail.token = prefManager!!.token
+            userDetail.loginChannel = prefManager!!.loginChannel
+            Utils.writeNewUser(userDetail,database,binding.root,"","Users",false)
+        }else{
+            username = prefManager!!.userName
+            emaidId =  prefManager!!.emailId
+            imageUrl = prefManager!!.imageUrl
+            if((!username.isNullOrBlank())&&!emaidId.isNullOrBlank()&&!imageUrl.isNullOrBlank()){
+                headerBinding.userName.text = username
+                headerBinding.userEmailId.text = emaidId
+                Glide.with(this).load(imageUrl).into(headerBinding.imageView);
             }
         }
-
-
-
+        headerBinding.appVersion.text = "v"+BuildConfig.VERSION_NAME
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
@@ -74,7 +88,7 @@ class DashboardMainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_tuition
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_tuition,R.id.nav_inbox
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

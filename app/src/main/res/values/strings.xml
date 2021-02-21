@@ -8,11 +8,13 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">User Info</string>
-    <string name="menu_gallery">Management</string>
-    <string name="menu_slideshow">MemberShip</string>
+    <string name="menu_home">Experts Dial</string>
+    <string name="menu_gallery">Lectures</string>
+    <string name="menu_slideshow">Inbox</string>
     <string name="menu_tuition">Tuition</string>
     <string name="menu_logout">Logout</string>
+    <string name="menu_improve">Improve us</string>
+    <string name="menu_news">News</string>
 
     <string name="title_activity_welcome">Home Screen</string>
     <string name="next">NEXT</string>
@@ -71,5 +73,18 @@
         <item>Others</item>
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_Android">Android expert have 7+ years of experience in corporate world.</string>
+    <string name="text_managment">Managment expert have 10+ years of experience in corporate world.</string>
+    <string name="text_civil">Civil services exam expert have almost 8+ years of experience in coaching environment.</string>
+    <string name="text_arts">Arts and Craft expert have 12+ years of experience in art design environment.</string>
+    <string name="text_app_expert">App Expert Details</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Your Queries Solution is here.</string>
+    <string name="msg_token_fmt">Firebase Token</string>
+    <string name="document_upload">Document Upload</string>
+    <string name="queries">Queries</string>
+    <string name="enter_the_description">Enter the Description</string>
+    <string name="enter_the_topic">Enter the topic</string>
+    <string name="url">URL</string>
+    <string name="provide_your_feedback_to_improve_us">Provide your feedback to improve us</string>
 </resources>

@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:text="@string/slide_3_title"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/slide_title"
+            android:textSize="@dimen/slide_title_2"
             android:textStyle="bold" />
 
         <TextView
