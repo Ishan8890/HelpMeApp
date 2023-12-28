@@ -25,7 +25,7 @@ class DetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        articleId = intent.getStringExtra("ID")
+        articleId = intent.getStringExtra("ID").toString()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail)
         (application as Injector).createNewsSubComponent().inject(this)
         newsViewModel= ViewModelProvider(this,factory)

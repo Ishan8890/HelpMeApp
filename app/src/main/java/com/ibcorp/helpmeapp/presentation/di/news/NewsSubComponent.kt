@@ -3,6 +3,7 @@ package com.ibcorp.helpmeapp.presentation.di.news
 import com.ibcorp.helpmeapp.DetailActivity
 import com.ibcorp.helpmeapp.Fragments.AllNewsFragment
 import com.ibcorp.helpmeapp.Fragments.NewsFragment
+import com.ibcorp.helpmeapp.Fragments.QuizFragment
 import com.ibcorp.helpmeapp.Fragments.SourceFragment
 import dagger.Subcomponent
 
@@ -12,7 +13,7 @@ interface NewsSubComponent {
     fun inject(sourceFragment: SourceFragment)
     fun inject(allNewsFragment: AllNewsFragment)
     fun inject(detailActivity: DetailActivity)
-//    fun inject(newsFragment: NewsFragment)
+    fun inject(quizFragment: QuizFragment)
 
     @Subcomponent.Factory
     interface Factory{

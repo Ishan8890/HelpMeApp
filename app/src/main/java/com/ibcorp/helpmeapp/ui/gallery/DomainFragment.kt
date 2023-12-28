@@ -27,7 +27,7 @@ class DomainFragment : Fragment() {
     lateinit var db:FirebaseFirestore
     lateinit var binding:FragmentGalleryBinding
     var selectedDomain:String = ""
-
+    lateinit var adapter:CommonReadAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -48,32 +48,6 @@ class DomainFragment : Fragment() {
             binding.noInternet.visibility= View.VISIBLE
             binding.parent.visibility = View.GONE
         }
-
-        binding.button3.setOnClickListener(){
-//            readDataFromFirestore()
-     /*       db.collection("users")
-                .get()
-                .addOnCompleteListener(object : OnCompleteListener<QuerySnapshot?> {
-                    override
-                    fun onComplete(task: Task<QuerySnapshot?>) {
-                        val list: ArrayList<String> = ArrayList()
-                        if (task.isSuccessful()) {
-                            for (document in task.getResult()!!) {
-                                Log.d(TAG, document.id + " => " + document.data)
-                                if(document.data.keys.equals("Topic")){
-                                    
-                                }
-                                var value = document.data.values.toString()
-                                list.add(value)
-                            }
-//                            var adapter =   CommonReadAdapter(list,activity)
-//                            binding.sourceRecyclerView.adapter = adapter
-                        } else {
-                            Log.w(TAG, "Error getting documents.", task.getException())
-                        }
-                    }
-                })*/
-        }
         return view
     }
 
@@ -81,7 +55,6 @@ class DomainFragment : Fragment() {
         var mFirestore = FirebaseFirestore.getInstance()
         binding.progressBar.visibility = View.VISIBLE
 //        mFirestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
-
         mFirestore.collection(domainType).get()
             .addOnSuccessListener {
                 var userList:List<User> = it.toObjects(User::class.java)
@@ -89,9 +62,11 @@ class DomainFragment : Fragment() {
                     binding.progressBar.visibility = View.GONE
                     binding.recyclerView.visibility = View.VISIBLE
                     Utils.captureUserLectureEvents("Lectures",userList.size.toString(),domainType,requireContext())
-                    val adapter = CommonReadAdapter(userList, requireContext(),false,requireActivity())
+                    adapter = CommonReadAdapter(userList, requireContext(),false,requireActivity())
                     binding.recyclerView.adapter = adapter
                 }else{
+                    binding.progressBar.visibility = View.GONE
+                    binding.recyclerView.visibility = View.GONE
                     Toast.makeText(
                         activity,
                         "No such document!",

@@ -15,14 +15,16 @@ class NewsModule {
         updateNewsUseCase: UpdateNewsUseCase,
         getArticleUseCase: GetArticleUseCase,
         getDetailNewsUseCase: GetDetailNewsUseCase,
-        getSelectedRecordUseCase: GetSelectedRecordUseCase
+        getSelectedRecordUseCase: GetSelectedRecordUseCase,
+        getQuizUsecase: GetQuizUsecase
     ): NewsViewModelFactory {
         return NewsViewModelFactory(
             getNewsUseCase,
             updateNewsUseCase,
             getArticleUseCase,
             getDetailNewsUseCase,
-            getSelectedRecordUseCase
+            getSelectedRecordUseCase,
+            getQuizUsecase
         )
     }
 

@@ -23,7 +23,7 @@
         android:textSize="18sp"
         android:textColor="@color/textColor"
         android:textStyle="bold"
-        android:text="Domain Type "/>
+        android:text="@string/area_of_interest"/>
     <Spinner
         android:id="@+id/domainName"
         android:layout_width="0dp"

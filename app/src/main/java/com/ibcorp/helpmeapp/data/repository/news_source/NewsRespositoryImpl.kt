@@ -5,14 +5,18 @@ import com.ibcorp.helpmeapp.model.source.Source
 import com.ibcorp.helpmeapp.data.repository.news_source.datasource.NewsCacheDataSource
 import com.ibcorp.helpmeapp.data.repository.news_source.datasource.NewsLocalDataSource
 import com.ibcorp.helpmeapp.data.repository.news_source.datasource.NewsRemoteDataSource
+import com.ibcorp.helpmeapp.data.repository.news_source.datasource.QuizDataSource
 import com.ibcorp.helpmeapp.domain.repository.NewsRepository
 import com.ibcorp.helpmeapp.model.allnews.Article
+import com.ibcorp.helpmeapp.model.quiz.QuizResponse
+import com.ibcorp.helpmeapp.model.quiz.Result
 import java.lang.Exception
 
 class NewsRespositoryImpl(
     private val newsCacheDataSource: NewsCacheDataSource,
     private val newsLocalDataSource: NewsLocalDataSource,
-    private val newsRemoteDataSource: NewsRemoteDataSource
+    private val newsRemoteDataSource: NewsRemoteDataSource,
+    private val quizRemoteDataSource: QuizDataSource
 ): NewsRepository {
     override suspend fun getNewsSource(): List<Source>? {
         return getNewsFromCache()
@@ -28,6 +32,10 @@ class NewsRespositoryImpl(
 
     override suspend fun getArticleSource(): List<Article>? {
         return getTopHeadlinesFromAPI()
+    }
+
+    override suspend fun getQuizSource(): List<Result>? {
+        return getQuizDataFromAPI()
     }
 
     override suspend fun getDetailSource(id:String): List<Article>? {
@@ -80,6 +88,20 @@ class NewsRespositoryImpl(
             Log.i("MyTag", exception.message.toString())
         }
         return articleList
+    }
+
+    suspend fun getQuizDataFromAPI():List<Result>{
+        var quizList: List<Result> = ArrayList()
+        try {
+            val response = quizRemoteDataSource.getQuizDataFromServer(5,"medium","boolean")
+            val body = response.body()
+            if(body!=null){
+                quizList = body.results
+            }
+        } catch (exception: Exception) {
+            Log.i("MyTag", exception.message.toString())
+        }
+        return quizList
     }
 
     suspend fun getNewsFromDB():List<Source>{

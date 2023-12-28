@@ -29,4 +29,5 @@ interface NewsService {
             @Query("apiKey") apiKey:String
     ):Response<NewsModel>
 
+
 }

@@ -5,7 +5,7 @@
     android:layout_height="fill_parent"
     android:fillViewport="true"
     android:gravity="center"
-    android:background="@color/cardview_shadow_start_color"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <include
@@ -73,8 +73,30 @@
             android:textAllCaps="false"
             android:text="Admin"/>
 
-
-
     </LinearLayout>
+
+    <EditText
+        android:id="@+id/et_guest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="10dp"
+        android:hint="Enter your name as guest user"
+        android:visibility="gone"
+        android:layout_marginRight="25dp" />
+
+    <Button
+        android:id="@+id/guest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:textAlignment="center"
+        android:paddingLeft="40dp"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        android:layout_marginTop="10dp"
+        android:background="@color/background_color"
+        android:text="Guest"/>
 </LinearLayout>
 </layout>

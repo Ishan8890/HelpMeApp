@@ -3,8 +3,8 @@
     package="com.ibcorp.helpmeapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
@@ -16,13 +16,18 @@
         android:roundIcon="@drawable/ic_help_icon_removebg"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FragmentReplacementActivity"/>
-        <activity android:name=".ui.MainActivity" />
-        <activity android:name=".ui.LoginActivity" />
+        <activity android:name=".FragmentReplacementActivity"
+            android:exported="true"/>
+        <activity android:name=".ui.MainActivity"
+            android:exported="true"/>
+        <activity android:name=".ui.LoginActivity"
+            android:exported="true"/>
         <activity android:name=".ui.home.AdminActivity"
+            android:exported="true"
             android:theme="@style/Theme.HelpMeApp.NoActionBar"/>
         <activity android:name=".DetailActivity"/>
         <activity android:name=".WelcomeActivity"
+            android:exported="true"
             android:theme="@style/AppTheme.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,6 +37,7 @@
         </activity>
         <activity
             android:name=".DashboardMainActivity"
+            android:exported="true"
             android:label="@string/app_name"
             android:clearTaskOnLaunch="true"
             android:theme="@style/Theme.HelpMeApp.NoActionBar" />
@@ -45,6 +51,7 @@
 
         <activity
             android:name="com.facebook.FacebookActivity"
+            android:exported="true"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
         <activity

@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.material.tabs.TabLayout
 import com.ibcorp.helpmeapp.R
 import com.ibcorp.helpmeapp.databinding.FragmentNewsBinding
+import com.ibcorp.helpmeapp.model.Utils
 import com.ibcorp.helpmeapp.presentation.adapter.MyAdapter
 import com.ibcorp.helpmeapp.presentation.news.NewsViewModelFactory
 import javax.inject.Inject
@@ -51,6 +52,7 @@ class NewsFragment : Fragment() {
     }
 
     fun init(){
+        Utils.captureFirebaseActionEvents("News","News Fragment",requireContext())
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Source"))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("All News"))
         binding.tabLayout.tabGravity = TabLayout.GRAVITY_FILL

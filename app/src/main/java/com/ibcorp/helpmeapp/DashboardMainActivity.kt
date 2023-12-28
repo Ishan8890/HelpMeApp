@@ -63,12 +63,6 @@ class DashboardMainActivity : AppCompatActivity() {
                 headerBinding.userEmailId.text = emaidId
                 Glide.with(this).load(imageUrl).into(headerBinding.imageView);
             }
-            var userDetail =  UserDetail()
-            userDetail.username = username
-            userDetail.email = emaidId
-            userDetail.token = prefManager!!.token
-            userDetail.loginChannel = prefManager!!.loginChannel
-            Utils.writeNewUser(userDetail,database,binding.root,"","Users",false)
         }else{
             username = prefManager!!.userName
             emaidId =  prefManager!!.emailId
@@ -80,7 +74,22 @@ class DashboardMainActivity : AppCompatActivity() {
             }
         }
         headerBinding.appVersion.text = "v"+BuildConfig.VERSION_NAME
+        var userDetail =  UserDetail()
+        userDetail.username = username
+        userDetail.email = emaidId
+        var childName = ""
+        if(emaidId.equals("guest@helpme.com")){
+            userDetail.loginChannel = "Guest"
+            childName = "Guest"
+            var ref = database.child(childName)
+            userDetail.token = ref.push().key!!
+        }else{
+            userDetail.token = prefManager!!.token
+            userDetail.loginChannel = prefManager!!.loginChannel
+            childName = "Users"
+        }
 
+        Utils.writeNewUser(userDetail,database,binding.root,"",childName,false)
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)

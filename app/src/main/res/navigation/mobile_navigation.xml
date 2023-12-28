@@ -40,4 +40,9 @@
         android:name="com.ibcorp.helpmeapp.Fragments.NewsFragment"
         android:label="@string/menu_news"
         tools:layout="@layout/fragment_news" />
+    <fragment
+        android:id="@+id/nav_quiz"
+        android:name="com.ibcorp.helpmeapp.Fragments.QuizFragment"
+        android:label="@string/menu_quiz"
+        tools:layout="@layout/fragment_quiz" />
 </navigation>

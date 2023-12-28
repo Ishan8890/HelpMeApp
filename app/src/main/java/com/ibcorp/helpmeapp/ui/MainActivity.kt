@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
@@ -19,12 +20,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
 import com.ibcorp.helpmeapp.DashboardMainActivity
 import com.ibcorp.helpmeapp.model.Utils
 import com.ibcorp.helpmeapp.PrefManager
 import com.ibcorp.helpmeapp.R
 import com.ibcorp.helpmeapp.databinding.ActivityMainBinding
+import com.ibcorp.helpmeapp.model.CustomToast
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
@@ -45,6 +48,7 @@ class MainActivity : AppCompatActivity() {
     fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        changePassword()
 
 //        Intent(this, HelloService::class.java).also { intent ->
 //
@@ -73,9 +77,35 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-    override fun onPause() {
-        super.onPause()
+    private fun changePassword() {
+         FirebaseAuth.getInstance().sendPasswordResetEmail("ishanb30@gmail.com")
+//            .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                @Override
+//                public void onComplete(@NonNull Task<Void> task) {
+//                    if (task.isSuccessful()) {
+//                        Toast.makeText(Activity.this, "Password Reset Email Sent!"), Toast.LENGTH_LONG).show();
+//                    }
+//                    else {
+//                        Toast.makeText(Activity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_LONG).show();
+//                    }
+//                });
+              .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success")
+//                            val user = auth.currentUser
+//                            updateUI(user)
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.exception)
+                            Toast.makeText(
+                                baseContext,
+                                "Authentication failed.",
+                                Toast.LENGTH_SHORT,
+                            ).show()
+//                            updateUI(null)
+                        }
+                    }
     }
 
     private fun isMyServiceRunning(serviceClass: Class<*>): Boolean {
@@ -97,6 +127,34 @@ class MainActivity : AppCompatActivity() {
         callbackManager = CallbackManager.Factory.create()
         binding.loginButton.setReadPermissions(Arrays.asList("email", "public_profile","user_friends"))
         binding.loginButton.setLoginBehavior(LoginBehavior.NATIVE_WITH_FALLBACK);
+        binding.guest.setOnClickListener {
+            if(binding.guest.text.equals("Guest")){
+                binding.etGuest.visibility = View.VISIBLE
+                binding.btnParent.visibility = View.GONE
+                binding.guest.text = "Login"
+            }else if(binding.guest.text.equals("Login")){
+                var userName = binding.etGuest.text.toString()
+                if(!userName.isNullOrBlank()){
+//                    binding.guest.text = "Guest"
+                    val intent = Intent(this, DashboardMainActivity::class.java)
+                    intent.putExtra(
+                        "data", getData(
+                            userName,
+                            "",
+                            "guest@helpme.com",
+                            "",
+                            "Guest",false
+                        )
+                    )
+                    Utils.captureFirebaseEvents("Guest User","Guest","Login",this)
+                    startActivity(intent)
+                    finish()
+                }else{
+                    CustomToast.snackbar("Field is Empty",binding.btnParent)
+                }
+
+            }
+        }
         binding.loginButton.registerCallback(
             callbackManager,
             object : FacebookCallback<LoginResult?> {

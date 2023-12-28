@@ -30,6 +30,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:text="TextView"
+                    android:textColor="@color/textColor"
                     android:textStyle="bold" />
 
                 <ImageView
@@ -45,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:text="TextView"
-                    android:textStyle="bold" />
+                    android:textColor="@color/textColor" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </LinearLayout>

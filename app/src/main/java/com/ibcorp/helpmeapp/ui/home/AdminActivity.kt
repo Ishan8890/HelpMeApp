@@ -143,7 +143,7 @@ class AdminActivity : AppCompatActivity() {
             if (!topic.isBlank() && !desc.isBlank() && !url.isBlank() && !Constant.selectedDomain.isBlank()) {
                 user.description = desc
                 user.topic = topic
-                user.url = url
+                user.url = Constant.url
                 Constant.uploadData(user,Constant.selectedDomain)
 //                Constant.dataList.add(d)
                 binding.topic.text.clear()

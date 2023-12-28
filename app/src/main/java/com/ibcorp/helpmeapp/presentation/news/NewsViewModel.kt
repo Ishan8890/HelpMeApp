@@ -9,6 +9,7 @@ class NewsViewModel(
     private val getNewsUseCase: GetNewsUseCase,
     private val updateNewsUseCase: UpdateNewsUseCase,
     private val getArticleUseCase: GetArticleUseCase,
+    private val getQuizUseCase: GetQuizUsecase,
     private val getDetailNewsUseCase: GetDetailNewsUseCase,
     private val getSelectedRecordUseCase: GetSelectedRecordUseCase
 ): ViewModel() {
@@ -25,6 +26,11 @@ class NewsViewModel(
     fun getHeadlines() = liveData {
         val articleList =getArticleUseCase.execute()
         emit(articleList)
+    }
+
+    fun getQuiz() = liveData {
+        val quizList =getQuizUseCase.execute()
+        emit(quizList)
     }
     fun getDetailNews(id:String) = liveData {
         val articleList =getDetailNewsUseCase.execute(id)

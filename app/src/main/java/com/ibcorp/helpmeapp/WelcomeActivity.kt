@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
+import com.ibcorp.helpmeapp.model.Utils
 import com.ibcorp.helpmeapp.ui.MainActivity
 import java.util.*
 
@@ -38,6 +39,7 @@ class WelcomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // Checking for first time launch - before calling setContentView()
+        Utils.isUpdate = false
         prefManager = PrefManager(this)
         if (prefManager!!.isFirstTimeLaunch) {
             launchHomeScreen()

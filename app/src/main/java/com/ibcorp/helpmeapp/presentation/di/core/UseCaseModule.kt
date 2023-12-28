@@ -22,6 +22,10 @@ class UseCaseModule {
         return GetArticleUseCase(newsRepository)
     }
     @Provides
+    fun provideGetQuizUseCase(newsRepository: NewsRepository): GetQuizUsecase {
+        return GetQuizUsecase(newsRepository)
+    }
+    @Provides
     fun provideGetDetailUseCase(newsRepository: NewsRepository): GetDetailNewsUseCase {
         return GetDetailNewsUseCase(newsRepository)
     }

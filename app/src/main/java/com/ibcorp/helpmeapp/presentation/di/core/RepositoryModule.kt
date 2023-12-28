@@ -4,6 +4,7 @@ import com.ibcorp.helpmeapp.data.repository.news_source.NewsRespositoryImpl
 import com.ibcorp.helpmeapp.data.repository.news_source.datasource.NewsCacheDataSource
 import com.ibcorp.helpmeapp.data.repository.news_source.datasource.NewsLocalDataSource
 import com.ibcorp.helpmeapp.data.repository.news_source.datasource.NewsRemoteDataSource
+import com.ibcorp.helpmeapp.data.repository.news_source.datasource.QuizDataSource
 import com.ibcorp.helpmeapp.domain.repository.NewsRepository
 import dagger.Module
 import dagger.Provides
@@ -17,13 +18,15 @@ class RepositoryModule {
     fun provideMovieRepository(
         newsRemoteDatasource: NewsRemoteDataSource,
         newsLocalDataSource: NewsLocalDataSource,
-        newsCacheDataSource: NewsCacheDataSource
+        newsCacheDataSource: NewsCacheDataSource,
+        quizDataSource: QuizDataSource
     ): NewsRepository {
 
         return NewsRespositoryImpl(
             newsCacheDataSource,
             newsLocalDataSource,
-            newsRemoteDatasource
+            newsRemoteDatasource,
+            quizDataSource
         )
     }
 

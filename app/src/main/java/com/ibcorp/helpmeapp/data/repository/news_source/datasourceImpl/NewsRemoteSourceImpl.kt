@@ -4,6 +4,7 @@ package com.ibcorp.helpmeapp.data.repository.news_source.datasourceImpl
 import com.ibcorp.helpmeapp.model.allnews.NewsModel
 import com.ibcorp.helpmeapp.data.api.NewsService
 import com.ibcorp.helpmeapp.data.repository.news_source.datasource.NewsRemoteDataSource
+import com.ibcorp.helpmeapp.model.quiz.QuizResponse
 import com.ibcorp.helpmeapp.model.source.SourceModel
 import retrofit2.Response
 
@@ -14,7 +15,4 @@ class NewsRemoteSourceImpl(private val apiService: NewsService, private val apiK
     override suspend fun getDetailNewsFromServer(id:String): Response<NewsModel> {
        return apiService.getAllNews(id,apiKey)
     }
-
-
-
 }

@@ -4,16 +4,23 @@ import android.app.Activity
 import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
+
+
 
 
 class Utils {
 
 
     companion object{
+
+        var isUpdate = false
         private lateinit var mFirebaseAnalytics: FirebaseAnalytics
 
         fun captureFirebaseEvents(
@@ -86,19 +93,26 @@ class Utils {
             mFirebaseAnalytics.logEvent("USER_EVENT", bundle)
         }
 
-        fun hideKeyboard(v: View,activity: Activity) {
+        fun hideKeyboard(v: View, activity: Activity) {
             val inputMethodManager = activity.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager!!.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0)
         }
 
-        fun writeNewUser(userDetail: UserDetail,database:DatabaseReference,view: View,message:String,dbChildName:String,isRateUs:Boolean) {
+        fun writeNewUser(
+            userDetail: UserDetail,
+            database: DatabaseReference,
+            view: View,
+            message: String,
+            dbChildName: String,
+            isRateUs: Boolean
+        ) {
             database.child(dbChildName).child(userDetail.token).setValue(userDetail)
                 .addOnSuccessListener {
                     if(isRateUs)
-                        CustomToast.snackbar(message,view)
+                        CustomToast.snackbar(message, view)
                 }
                 .addOnFailureListener {
-                    CustomToast.snackbar(it.toString(),view)
+                    CustomToast.snackbar(it.toString(), view)
                 }
         }
     }
